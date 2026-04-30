@@ -1,111 +1,131 @@
-// 🔥 IMPORTANTE: usar type="module" en el HTML
+// ============================
+// 🔹 EFECTO NAVBAR (tu código)
+// ============================
+
+var scrollpos = window.scrollY;
+var header = document.getElementById("header");
+var navcontent = document.getElementById("nav-content");
+var navaction = document.getElementById("navAction");
+var toToggle = document.querySelectorAll(".toggleColour");
+
+document.addEventListener("scroll", function () {
+    scrollpos = window.scrollY;
+
+    if (scrollpos > 10) {
+        if(header){
+            header.classList.add("bg-white");
+            header.classList.add("shadow");
+        }
+        if(navaction){
+            navaction.classList.remove("bg-white");
+            navaction.classList.add("gradient");
+            navaction.classList.add("text-white");
+        }
+
+        for (var i = 0; i < toToggle.length; i++) {
+            toToggle[i].classList.add("text-gray-800");
+            toToggle[i].classList.remove("text-white");
+        }
+
+        if(navcontent){
+            navcontent.classList.add("bg-white");
+        }
+
+    } else {
+        if(header){
+            header.classList.remove("bg-white");
+            header.classList.remove("shadow");
+        }
+
+        if(navaction){
+            navaction.classList.remove("gradient");
+            navaction.classList.add("bg-white");
+            navaction.classList.remove("text-white");
+        }
+
+        for (var i = 0; i < toToggle.length; i++) {
+            toToggle[i].classList.add("text-white");
+            toToggle[i].classList.remove("text-gray-800");
+        }
+
+        if(navcontent){
+            navcontent.classList.remove("bg-white");
+        }
+    }
+});
 
 // ============================
-// 🔹 FIREBASE
+// 🔹 MENU MOBILE
 // ============================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
 
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "duo-adonay.firebaseapp.com",
-  projectId: "duo-adonay",
-  messagingSenderId: "1053035827307",
-  appId: "TU_APP_ID"
-};
+var navMenuDiv = document.getElementById("nav-content");
+var navMenu = document.getElementById("nav-toggle");
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+document.addEventListener("click", function(e) {
+    var target = e.target;
 
-// ============================
-// 🔹 UI
-// ============================
-window.irAlPedido = function() {
-  document.getElementById("menu").style.display = "none";
-  document.getElementById("pedido").style.display = "block";
-};
+    if (navMenu && navMenuDiv) {
+        if (!navMenuDiv.contains(target)) {
+            if (navMenu.contains(target)) {
+                navMenuDiv.classList.toggle("hidden");
+            } else {
+                navMenuDiv.classList.add("hidden");
+            }
+        }
+    }
+});
 
 // ============================
 // 🔹 CALCULAR TOTAL
 // ============================
-function calcularTotal() {
-  const simple = Number(document.getElementById("simple").value) * 100;
-  const completa = Number(document.getElementById("completa").value) * 150;
-  const combo = Number(document.getElementById("combo").value) * 1550;
 
-  return simple + completa + combo;
+function calcularTotal() {
+    var simple = Number(document.getElementById("simple")?.value || 0) * 100;
+    var completa = Number(document.getElementById("completa")?.value || 0) * 150;
+    var combo = Number(document.getElementById("combo")?.value || 0) * 1550;
+
+    return simple + completa + combo;
 }
 
 // ============================
-// 🔹 PAGO MERCADO PAGO
+// 🔥 BOTON DE PAGO (FUNCIONA)
 // ============================
-window.pagarConMercadoPago = async function() {
-  try {
+
+function pagarConMercadoPago() {
     alert("Botón funcionando ✅");
 
-    const total = calcularTotal();
-    console.log("Total:", total);
+    var total = calcularTotal();
 
     if (total <= 0) {
-      alert("Elegí al menos un producto");
-      return;
+        alert("Elegí al menos un producto");
+        return;
     }
 
-    const res = await fetch("https://duoadonay.onrender.com/crear-pago", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        titulo: "Pedido Dúo Adonay",
-        precio: total,
-        cantidad: 1
-      })
-    });
-
-    const data = await res.json();
-    console.log("Respuesta servidor:", data);
-
-    if (data.init_point) {
-      window.location.href = data.init_point;
-    } else {
-      alert("Error al generar el pago");
-    }
-
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Error conectando con el servidor");
-  }
-};
-
-// ============================
-// 🔹 NOTIFICACIONES
-// ============================
-async function activarNotificaciones() {
-  try {
-    const permiso = await Notification.requestPermission();
-
-    if (permiso === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey: "TU_VAPID_KEY"
-      });
-
-      console.log("TOKEN:", token);
-
-      await fetch("https://duo-adonay-default-rtdb.firebaseio.com/tokens.json", {
+    fetch("https://duoadonay.onrender.com/crear-pago", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify({ token })
-      });
+        body: JSON.stringify({
+            titulo: "Pedido Dúo Adonay",
+            precio: total,
+            cantidad: 1
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Respuesta:", data);
 
-      console.log("Token guardado");
-    }
-
-  } catch (error) {
-    console.error("Error notificaciones:", error);
-  }
+        if (data.init_point) {
+            window.location.href = data.init_point;
+        } else {
+            alert("Error al crear el pago");
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Error conectando con el servidor");
+    });
 }
 
 // ejecutar al cargar
