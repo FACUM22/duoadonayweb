@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dúo Adonay - Pedidos</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🍔 Dúo Adonay</h1>
+<h3>Pedidos para mañana</h3>
+
+<div id="menu">
+  <h2>Menú</h2>
+
+  <div class="producto">
+    <p>Hamburguesa simple - $100</p>
+    <input type="number" id="simple" min="0" value="0">
+  </div>
+
+  <div class="producto">
+    <p>Hamburguesa completa - $150</p>
+    <input type="number" id="completa" min="0" value="0">
+  </div>
+
+  <div class="producto">
+    <p>Combo familiar - $1550</p>
+    <input type="number" id="combo" min="0" value="0">
+  </div>
+
+  <button onclick="irAlPedido()">Continuar</button>
+</div>
+
+<div id="pedido" style="display:none;">
+  <h2>Datos del cliente</h2>
+
+  <input type="text" id="nombre" placeholder="Nombre"><br>
+  <input type="text" id="telefono" placeholder="Teléfono"><br>
+  <input type="text" id="direccion" placeholder="Dirección"><br>
+
+  <h3>Método de pago</h3>
+  <select id="pago">
+    <option value="mercadopago">Mercado Pago</option>
+    <option value="transferencia">Transferencia</option>
+  </select>
+
+  <button onclick="confirmarPedido()">Confirmar pedido</button>
+</div>
+
+<!-- 🔥 IMPORTANTE -->
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

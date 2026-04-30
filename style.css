@@ -1,0 +1,27 @@
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #fff3e0;
+}
+
+h1 {
+  color: #d84315;
+}
+
+.producto {
+  margin: 10px;
+}
+
+input, select {
+  margin: 5px;
+  padding: 8px;
+  width: 200px;
+}
+
+button {
+  padding: 10px;
+  background: #ff5722;
+  color: white;
+  border: none;
+  margin-top: 10px;
+}
