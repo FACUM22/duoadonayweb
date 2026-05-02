@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin</title>
+</head>
+
+<body style="text-align:center; font-family:Arial;">
+
+<h2>🔐 Admin</h2>
+
+<input type="text" id="user" placeholder="Usuario"><br><br>
+<input type="password" id="pass" placeholder="Contraseña"><br><br>
+
+<button onclick="login()">Entrar</button>
+
+<script>
+function login() {
+  const u = document.getElementById("user").value.trim();
+  const p = document.getElementById("pass").value.trim();
+
+  if (u === "admin" && p === "1234") {
+    localStorage.setItem("admin", "true");
+    window.location.href = "admin.html";
+  } else {
+    alert("Incorrecto");
+  }
+}
+</script>
+
+</body>
+</html>
