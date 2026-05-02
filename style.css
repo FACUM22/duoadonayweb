@@ -1,27 +1,79 @@
 body {
-  font-family: Arial;
-  text-align: center;
-  background: #fff3e0;
+  max-width: 500px;
+  margin: auto;
+  background: #eee;
 }
 
+/* TITULOS */
 h1 {
-  color: #d84315;
+  text-align: center;
+  background: #ff5722;
+  color: white;
+  padding: 15px;
+  margin: 0;
 }
 
-.producto {
-  margin: 10px;
+/* CONTENEDOR */
+#menu, #pedido {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 15px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-input, select {
-  margin: 5px;
-  padding: 8px;
-  width: 200px;
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
+/* BOTONES */
 button {
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   background: #ff5722;
   color: white;
   border: none;
+  border-radius: 8px;
+  font-size: 16px;
   margin-top: 10px;
+  cursor: pointer;
+}
+
+/* HOVER (solo desktop) */
+button:hover {
+  background: #e64a19;
+}
+
+/* TOTAL */
+#total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 📱 MOBILE EXTRA */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  #menu, #pedido {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
 }
