@@ -114,9 +114,23 @@ function pagar() {
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ nombre, telefono, direccion, simple, completa, combo })
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("Error en el servidor");
+    }
+    return res.json();
+  })
   .then(data => {
-    window.location.href = data.init_point;
+    if (data && data.init_point) {
+      window.location.href = data.init_point;
+    } else {
+      alert("No se pudo generar el pago");
+      console.log(data);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Error al conectar con el servidor de pago");
   });
 }
 </script>
